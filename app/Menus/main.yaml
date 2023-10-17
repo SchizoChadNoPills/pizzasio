@@ -1,0 +1,33 @@
+# Menus
+accueil:
+   title: Accueil
+   url: /
+   perm: none
+   icon: <i class="nav-icon fas fa-icon-home"></i>
+   class: main-menu-accueil
+ingredient:
+  title: Ingrédient
+  url: /Ingredient
+  icon: <i class="fa-solid fa-utensils"></i>
+  subs: 
+    gerer-ingredient:
+      title: Ingrédients
+      url: /Ingredient
+      icon: <i class="fa-solid fa-utensils"></i>
+    categorie-ingredient:
+      title: Categorie
+      url: /Category
+      icon: <i class="fa-solid fa-folder-tree"></i>
+    etape-ingredient:
+      title: Etape
+      url: /Step
+      icon: <i class="fa-solid fa-arrow-up-1-9"></i>
+admin:
+  title: Administration
+  url: /Admin
+  icon: <i class="nav-icon fas fa-gears"></i>
+  subs:
+    users:
+      title: Utilisateurs
+      url: /Users
+      icon: <i class="nav-icon fas fa-users-gear"></i>
