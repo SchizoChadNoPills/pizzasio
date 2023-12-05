@@ -1,8 +1,8 @@
-#Pizza SIO
+# Pizza SIO
  
-##Projet Web pour le BTS SIO option SLAM 2224 du CIPECMA.
+## Projet Web pour le BTS SIO option SLAM 2224 du CIPECMA.
  
-###Description
+### Description
 Permet la création de compte d'administrateur pour ajouter/editer/supprimer tout ou partie d'une gestion d'ingrédients classé par étapes et catégories afin de créer des compositions de Pizza et pouvoir les mettres ensuite à disposition à l'achat pour l'application de commande (Projet Android [url] ).
  
 ##### Conventional Commits
