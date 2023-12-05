@@ -13,9 +13,9 @@
             </div>
             <div class="card-body">
                 <?php
-                if (isset($ing)) { 
+                if (isset($ing)) {
                     $isAdmin = true;
-                    ?>
+                ?>
                     <input type="hidden" name="id" value="<?= $ing['id']; ?>">
                 <?php
                 }
@@ -39,14 +39,14 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="price" class="col-sm-2 col-form-label">Catégorie</label>
+                    <label for="category" class="col-sm-2 col-form-label">Catégorie</label>
                     <div class="col-sm-10">
                         <select class="form-select" name="id_category">
                             <?php
                             foreach ($categ as $c) {
-                                ?>
-                                <option value="<?= $c['id'];?>"<?= (isset($ing) && $ing['id_category'] == $c['id']) ? 'selected' : ''; ?> ><?= $c['name']; ?></option>
-                            }<?php
+                            ?>
+                                <option value="<?= $c['id']; ?>" <?= (isset($ing) && $ing['id_category'] == $c['id']) ? 'selected' : ''; ?>><?= $c['name']; ?></option>
+                            <?php
                             }
                             ?>
                         </select>
@@ -54,14 +54,18 @@
                 </div>
                 <div class="row mb-3">
                     <label for="bio" class="col-sm-2 col-form-label">Bio ?</label>
-                    <div class="form-check form-switch form-check-custom form-check-solid col-sm-10">
-                        <input class="form-check-input" name="bio" type="checkbox" value="" id="bio" <?= (isset($ing) && $ing['bio'] == true) ? "checked" : ""; ?> />
+                    <div class="col-sm-10">
+                        <div class="form-check form-switch form-check-custom form-check-solid col-sm-10">
+                            <input class="form-check-input" name="bio" type="checkbox" value="" id="bio" <?= (isset($ing) && $ing['bio'] == true) ? "checked" : ""; ?> />
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="vegan" class="col-sm-2 col-form-label">Vegan ?</label>
-                    <div class="form-check form-switch form-check-custom form-check-solid col-sm-10">
-                        <input class="form-check-input" name="vegan" type="checkbox" value="" id="vegan" <?= (isset($ing) && $ing['vegan'] == true) ? "checked" : ""; ?> />
+                    <div class="col-sm-10">
+                        <div class="form-check form-switch form-check-custom form-check-solid col-sm-10">
+                            <input class="form-check-input" name="vegan" type="checkbox" value="" id="vegan" <?= (isset($ing) && $ing['vegan'] == true) ? "checked" : ""; ?> />
+                        </div>
                     </div>
                 </div>
             </div>

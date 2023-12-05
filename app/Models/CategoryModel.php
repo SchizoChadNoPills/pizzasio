@@ -24,6 +24,11 @@ class CategoryModel extends Model
         return $this->find($id);
     }
 
+    public function getCategoryByIdStep($id_step)
+    {
+        return $this->where('id_step', $id_step)->get()->getResultArray();
+    }
+
     public function createCategory(Category $category)
     {
         return $this->insert($category);
@@ -63,6 +68,7 @@ class CategoryModel extends Model
 
         return $this->builder()->countAllResults();
     }
+
     public function getFilteredCategory($searchValue)
 
     {

@@ -15,18 +15,18 @@ class Category extends BaseController
 
         $this->addbreadcrumb('Administration','#');
         $this->addbreadcrumb('Gestion des catégories',['Category']);
-
+        $stepModel = model('StepModel');
         if ($id_category == "new"){
             $this->addBreadcrumb('Création catégorie', ['Category', 'edit', 'new']);
-            return $this->view('/category/edit');
+            return $this->view('/category/edit', ['step' => $stepModel-> getAllStep()]);
         }
 
-        $um = model('CategoryModel');
+        $categoryModel = model('CategoryModel');
         $this->title = "gerer la catégorie";
-        $ing = $um->getCategoryById($id_category);
-        $this->addBreadcrumb('Edition de ' . $ing['name'], ['Category', 'edit', $id_category]);
-        if ($ing) {
-            return $this->view('/category/edit', ['ing' => $ing]);
+        $category = $categoryModel->getCategoryById($id_category);
+        $this->addBreadcrumb('Edition de ' . $category['name'], ['Category', 'edit', $id_category]);
+        if ($category) {
+            return $this->view('/category/edit', ['category' => $category, 'step' => $stepModel-> getAllStep()]);
         }
         return $this->error('La catégorie n\'existe pas');
         return $this->redirect('Category');

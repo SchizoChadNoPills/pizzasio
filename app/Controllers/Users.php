@@ -23,12 +23,12 @@ class Users extends BaseController
             return $this->view('/user/edit');
         }
 
-        $um = model('UserModel');
+        $userModel = model('UserModel');
         $this->title = "gerer l\'utilisateur";
-        $u = $um->getUserById($id_user);
-        $this->addBreadcrumb('Edition de ' . $u['username'], ['Users', 'edit', $id_user]);
-        if ($u) {
-            return $this->view('/user/edit', ['u' => $u]);
+        $user = $userModel->getUserById($id_user);
+        $this->addBreadcrumb('Edition de ' . $user['username'], ['Users', 'edit', $id_user]);
+        if ($user) {
+            return $this->view('/user/edit', ['u' => $user]);
         }
         return $this->error('L\'utilisateur n\'existe pas');
         return $this->redirect('Users');

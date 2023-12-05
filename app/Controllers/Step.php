@@ -21,12 +21,12 @@ class Step extends BaseController
             return $this->view('/step/edit');
         }
 
-        $um = model('StepModel');
+        $stepModel = model('StepModel');
         $this->title = "gerer l'étape";
-        $ing = $um->getStepById($id_step);
-        $this->addBreadcrumb('Edition de ' . $ing['name'], ['Step', 'edit', $id_step]);
-        if ($ing) {
-            return $this->view('/step/edit', ['ing' => $ing]);
+        $step = $stepModel->getStepById($id_step);
+        $this->addBreadcrumb('Edition de ' . $step['name'], ['Step', 'edit', $id_step]);
+        if ($step) {
+            return $this->view('/step/edit', ['step' => $step]);
         }
         return $this->error("L\'étape n\'existe pas");
         return $this->redirect('Step');

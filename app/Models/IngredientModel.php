@@ -25,6 +25,11 @@ class IngredientModel extends Model
         return $this->find($id);
     }
 
+    public function getIngredientByIdCategory($id_category)
+    {
+        return $this->where('id_category', $id_category)->findAll();
+    }
+
     public function createIngredient(Ingredient $ingredient)
     {
         return $this->insert($ingredient);
