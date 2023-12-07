@@ -38,9 +38,9 @@ class Pizza extends BaseController
         $pizza = $pizzaModel->getPizzaById($id_pizza);
         if ($pizza) {
             $composePizzaModel = model('ComposePizzaModel');
-            $id_ingredient = $composePizzaModel->getIngredientByPizzaId($pizza['id']);
+            $pizza_ing = $composePizzaModel->getIngredientByPizzaId($pizza['id']);
             $this->addBreadcrumb('Edition de ' . $pizza['name'], ['Pizza']);
-            return $this->view('/pizza/edit', ['pizza' => $pizza, 'steps' => $steps, 'categories' => $categories, 'ingredients' => $ingredients, 'pate' => $pate, 'base' => $base, 'id_ingredient' => $id_ingredient]);
+            return $this->view('/pizza/edit', ['pizza' => $pizza, 'steps' => $steps, 'categories' => $categories, 'ingredients' => $ingredients, 'pate' => $pate, 'base' => $base, 'pizza_ing' => $pizza_ing]);
         }
         return $this->error('La pizza n\'existe pas');
         return $this->redirect('Pizza');
@@ -64,7 +64,70 @@ class Pizza extends BaseController
             $data_ing[] = ['id_pizza' => $id, 'id_ing' => (int) $ing];
         }
         $composePizza = model('ComposePizzaModel');
-        $composePizza -> insertPizzaIngredient($data_ing);
+        $composePizza->insertPizzaIngredient($data_ing);
         return $this->redirect('Pizza');
+    }
+
+    public function postSearchPizza()
+    {
+        $pizzaModel = model('pizzaModel');
+
+        // Paramètres de pagination et de recherche envoyés par DataTables
+        $draw        = $this->request->getPost('draw');
+        $start       = $this->request->getPost('start');
+        $length      = $this->request->getPost('length');
+        $searchValue = $this->request->getPost('search')['value'];
+
+        // Obtenez les informations sur le tri envoyées par DataTables
+
+        $orderColumnIndex = $this->request->getPost('order')[0]['column'];
+        $orderDirection = $this->request->getPost('order')[0]['dir'];
+        $orderColumnName = $this->request->getPost('columns')[$orderColumnIndex]['data'];
+
+
+
+        // Obtenez les données triées et filtrées pour la colonne "sku_syaleo"
+        $data = $pizzaModel->getPaginatedPizza($start, $length, $searchValue, $orderColumnName, $orderDirection);
+
+
+
+        // Obtenez le nombre total de lignes sans filtre
+        $totalRecords = $pizzaModel->getTotalPizza();
+
+        // Obtenez le nombre total de lignes filtrées pour la recherche
+        $filteredRecords = $pizzaModel->getFilteredPizza($searchValue);
+
+        $result = [
+            'draw'            => $draw,
+            'recordsTotal'    => $totalRecords,
+            'recordsFiltered' => $filteredRecords,
+            'data'            => $data,
+        ];
+        return $this->response->setJSON($result);
+    }
+
+    public function getPizzaContent()
+    {
+        $idPizza = $this->request->getVar('idPizza');
+        $pizzaModel = model('PizazModel');
+        $ingredientModel = model('ingredientModel');
+        $pizza = $pizzaModel->getPizzaById($idPizza);
+
+        if ($pizza) {
+            $composePizzaModel = model('ComposePizzaModel');
+            $pizza_ing = $composePizzaModel->getIngredientByPizzaId($pizza['id']);
+            $id_base = $ingredientModel->getIngredientById($pizza['id_base']);
+            $id_pate = $ingredientModel->getIngredientById($pizza['id_pate']);
+            $id_ing = $ingredientModel->getIngredientById($pizza['id_ing']);
+        }
+
+        $result = array();
+        $result = [
+            'pizza'           => $pizza_ing,
+            'base'    => $id_base,
+            'pate' => $id_pate,
+            'ingredients' => $id_ing,
+        ];
+        return $this->response->setJson($result);
     }
 }

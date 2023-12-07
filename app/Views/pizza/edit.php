@@ -90,7 +90,7 @@
                                     <!--end::Label-->
 
                                     <!--begin::Input-->
-                                    <input type="text" class="form-control form-control-solid" name="name" placeholder="" value="<?= isset($pizza) ? $pizza['name'] : ''?>" />
+                                    <input type="text" class="form-control form-control-solid" name="name" placeholder="" value="<?= isset($pizza) ? $pizza['name'] : '' ?>" />
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
@@ -106,9 +106,9 @@
                                     <!--end::Label-->
 
                                     <!--begin::Input-->
-                                    <select class="form-select" name="pate">
+                                    <select class="form-select form-select-solid selectIngredient" name="pate" data-old-price="0">
                                         <?php foreach ($pate as $pate) : ?>
-                                            <option <?= (isset($pizza) && ($pizza['id_pate'] == $pate['id'])) ? 'selected' : '' ?> value="<?= $pate['id']; ?>"><?= $pate['name']; ?></option>
+                                            <option <?= (isset($pizza) && ($pizza['id_pate'] == $pate['id'])) ? 'selected' : '' ?> value="<?= $pate['id']; ?>" data-price="<?= $pate['price']; ?>"><?= $pate['name'] . " (+" . $pate['price'] . "€)" ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                     <!--end::Input-->
@@ -126,9 +126,9 @@
                                     <!--end::Label-->
 
                                     <!--begin::Input-->
-                                    <select class="form-select" name="base">
+                                    <select class="form-select form-select-solid selectIngredient" name="base" data-old-price="0">
                                         <?php foreach ($base as $base) : ?>
-                                            <option <?= (isset($pizza) && ($pizza['id_base'] == $base['id'])) ? 'selected' : '' ?> value="<?= $base['id']; ?>"><?= $base['name']; ?></option>
+                                            <option <?= (isset($pizza) && ($pizza['id_pate'] == $base['id'])) ? 'selected' : '' ?> value="<?= $base['id']; ?>" data-price="<?= $base['price']; ?>"><?= $base['name'] . " (+" . $base['price'] . "€)" ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                     <!--end::Input-->
@@ -143,17 +143,38 @@
                                 <div class="fv-row mb-10">
                                     <!--begin::Label-->
                                     <label class="form-label">Ingredients de la pizza</label>
+                                    <?php if (isset($pizza)) {
+
+                                        echo '<p class="fs-6">Ingrédient de la pizza</p>';
+                                        foreach ($pizza_ing as $p_ing) {
+                                    ?>
+
+
+                                            <div class="btn btn-sm btn-outline me-4  position-relative">
+                                                <?php
+                                                echo $p_ing->name;
+                                                ?>
+                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                    X
+                                                </span>
+                                            </div>
+
+                                    <?php }
+                                    } ?>
                                     <!--end::Label-->
 
                                     <!--begin::Input-->
                                     <div class="d-flex flex-row">
-                                            <select class="form-select mb-4 me-4" id="categ">
-                                                <?php foreach ($categories as $cat) : ?>
-                                                    <option value="<?= $cat['id']; ?>"><?= $cat['name']; ?></option>
+                                        <select class="form-select mb-4 me-4" id="categ">
+                                            <?php foreach ($categories as $cat) {
+                                                if ($cat['id'] == 10 || $cat['id'] == 13) {
+                                                    continue;
+                                                } ?>
+                                                <option value="<?= $cat['id']; ?>"><?= $cat['name']; ?></option>
 
-                                                <?php endforeach; ?>
-                                            </select>
-                                            <a href="#" class="btn btn-primary mb-4" id="btn-add">Ajouter</a>
+                                            <?php    } ?>
+                                        </select>
+                                        <a href="#" class="btn btn-success mb-4" id="btn-add">Ajouter</a>
                                     </div>
                                     <div id="emplacement">
                                         <!--end::Input-->
@@ -176,7 +197,9 @@
                                 </button>
                             </div>
                             <!--end::Wrapper-->
-
+                            <div>
+                                <p class="fs-6">Prix de la pizza:<span id="prixtotal">0</span>€</p>
+                            </div>
                             <!--begin::Wrapper-->
                             <div>
                                 <button type="submit" class="btn btn-primary" data-kt-stepper-action="submit">
@@ -224,9 +247,20 @@
             stepper.goPrevious(); // go previous step
         });
 
-        $("#btn-add").on('click', function() {
+        $(document).on('click', '#removeIngredient', function() {
+
+            var prix = parseFloat($(this).closest('.d-flex').find('.selectIngredient').find('option:selected').data('price'))
+            var ancienPrix = parseFloat($('#prixtotal').html())
+
+            $(this).closest('.d-flex').remove();
+            $('#prixtotal').text((ancienPrix - prix).toFixed(2))
+        });
+
+        $("#btn-add").on('click', function(e) {
+            e.preventDefault()
             var id_categ = $('#categ').val();
             console.log(id_categ);
+
             $.ajax({
                 url: "/Pizza/AjaxIngredients",
                 type: "GET",
@@ -234,20 +268,29 @@
                     idCateg: id_categ
                 },
                 success: function(data) {
-                    let select = "<select class='form-select mb-4' name='ingredients[]'>";
-                    let button = "<a href='#' class='btn btn-primary' id='btn-add'>Supprimer</a>"
+                    let select = `<div class="d-flex flex-row "><select class="selectIngredient form-select mb-4 me-4" data-old-price="0.0"  name="ingredients[]">`
                     data.forEach((ing) => {
-                        var option = "<option value='" + ing.id + "' > " + ing.name + "</option>";
+                        var option = "<option data-price=" + ing.price + " value=" + ing.id + " > " + ing.name + " (+" + ing.price + ") </option>";
                         select += option;
                     });
-                    select += "</select>";
-                    $('#emplacement').append(select);
-                    console.log(data);
+                    select += "</select><div class='flex-col'><i class='fa-solid fa-x me-4' id='removeIngredient' role='button'></i></div></div>";
+
+                    $("#emplacement").append(select)
+                    $("#emplacement").find('.selectIngredient').last().trigger('change');
                 },
                 error: function(hxr, status, error) {
                     console.log(error);
                 }
             });
         });
+        $(document).on('change', '.selectIngredient', function(e) {
+            console.log($(this).find('option:selected').data('price'));
+            var price = parseFloat($("#prixtotal").html());
+            var selectedPrice = parseFloat($(this).find('option:selected').data('price'));
+            var oldPrice = parseFloat($(this).data('old-price'));
+            $("#prixtotal").html((price + selectedPrice - oldPrice).toFixed(2));
+            $(this).data('old-price', selectedPrice);
+        });
+
     })
 </script>
