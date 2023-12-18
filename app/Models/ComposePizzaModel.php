@@ -36,14 +36,11 @@ class ComposePizzaModel extends Model{
         }
     }
 
-    public function getIngredientByPizzaId(){
-        return $this-> ;
-    }
 
     public function getIngredientByPizzaId($id_pizza) {
-        $builder = $db->table($this->table);
-        $builder->select('ingredient.name, ingredient.id');
-        $builder->join('ingredient', 'ingredient.id = compose_pizza.id_ingredient');
+        $builder = $this->db->table($this->table);
+        $builder->select('ingredient.name, ingredient.id, ingredient.price');
+        $builder->join('ingredient', 'ingredient.id = compose_pizza.id_ing');
         $builder->where('compose_pizza.id_pizza', $id_pizza);
         $query = $builder->get();
         $data = $query->getResult();
