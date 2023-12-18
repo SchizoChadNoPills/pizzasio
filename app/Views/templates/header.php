@@ -28,7 +28,7 @@
                <div class="menu menu-rounded menu-column menu-lg-row my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true">
 
                 <ol class="breadcrumb text-muted fs-6 fw-semibold">
-                  <li class="breadcrumb-item"><a href="/" class="">MyApp</a></li>
+                  <li class="breadcrumb-item"><a href="/" class="">Pizza SIO</a></li>
                   <?php foreach ($breadcrumb as $bitem) { ?>
                     <li class="breadcrumb-item"><a href="<?= $bitem['url'] ?>" class=""><?= $bitem['text'] ?></a></li>
                   <?php } ?>
