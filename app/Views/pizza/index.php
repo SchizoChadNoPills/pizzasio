@@ -15,6 +15,7 @@
                         <th>ID</th>
                         <th>Nom</th>
                         <th>Active</th>
+                        <th>Prix</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -44,7 +45,6 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -61,7 +61,20 @@
                 idPizza: id
             },
             success: function(data) {
+                console.log(data);
                 var modal = new bootstrap.Modal(document.getElementById('modalPizza'));
+                $(".modal-title").html(data.pizza.name);
+                var content = "<h5>Pâte</h5>";
+                content += "<ul><li>"+ data.pate.name +"</li></ul>";
+                content += "<h5>Base</h5>"
+                content += "<ul><li>"+ data.base.name +"</li></ul>";
+                content += "<h5>Ingrédients</h5>";
+                content += "<ul>";
+                data.ingredients.forEach((ing) => {
+                    content += "<li>" + ing.name + "</li>";
+                });
+                content += "</ul>";
+                $(".modal-body").html(content);
                 modal.toggle();
             },
             error: function(hxr, status, error) {
@@ -95,6 +108,9 @@
                         return (data === "1" ? 'Oui' : 'Non');
                     }
                 },
+                {
+                    "data": 'price'
+                },  
                 {
                     "data": 'id',
                     "sortable": false,

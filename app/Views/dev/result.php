@@ -1,1 +1,1 @@
-result
+<? var_dump($a) ?>

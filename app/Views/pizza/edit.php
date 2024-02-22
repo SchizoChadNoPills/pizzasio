@@ -72,6 +72,7 @@
                         ?>
 
                     </div>
+
                     <!--end::Nav-->
                 </div>
 
@@ -150,35 +151,38 @@
                                     ?>
 
 
-                                            <div class="btn btn-sm btn-outline me-4  position-relative">
+                                            <div class="btn btn-sm btn-outline me-4  position-relative" data-id="<?= $p_ing->id ?>" data-price="<?= $p_ing->price ?>">
                                                 <?php
                                                 echo $p_ing->name;
                                                 ?>
-                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger removeOldIngredient"">
                                                     X
                                                 </span>
                                             </div>
 
                                     <?php }
                                     } ?>
-                                    <!--end::Label-->
 
-                                    <!--begin::Input-->
-                                    <div class="d-flex flex-row">
-                                        <select class="form-select mb-4 me-4" id="categ">
-                                            <?php foreach ($categories as $cat) {
-                                                if ($cat['id'] == 10 || $cat['id'] == 13) {
-                                                    continue;
-                                                } ?>
-                                                <option value="<?= $cat['id']; ?>"><?= $cat['name']; ?></option>
+                                                    <!--end::Label-->
 
-                                            <?php    } ?>
-                                        </select>
-                                        <a href="#" class="btn btn-success mb-4" id="btn-add">Ajouter</a>
-                                    </div>
-                                    <div id="emplacement">
-                                        <!--end::Input-->
-                                    </div>
+                                                    <!--begin::Input-->
+                                                    <div class=" d-flex flex-row">
+                                                    <select class="form-select mb-4 me-4" id="categ">
+                                                        <?php foreach ($categories as $cat) {
+                                                            if ($cat['id'] == 10 || $cat['id'] == 13) {
+                                                                continue;
+                                                            } ?>
+                                                            <option value="<?= $cat['id']; ?>"><?= $cat['name']; ?></option>
+
+                                                        <?php    } ?>
+                                                    </select>
+                                                    <a href="#" class="btn btn-success mb-4" id="btn-add">Ajouter</a>
+                                            </div>
+                                            <div id="emplacement">
+                                                <!--end::Input-->
+                                            </div>
+                                            <div id=" ing_supprimer">
+                                            </div>
                                 </div>
                                 <!--end::Input group-->
                             </div>
@@ -246,6 +250,17 @@
         stepper.on("kt.stepper.previous", function(stepper) {
             stepper.goPrevious(); // go previous step
         });
+
+        $(document).on('click', '.removeOldIngredient', function() {
+
+            var prix = parseFloat($(this).closest('.btn').data('price'))
+            var ancienPrix = parseFloat($("#prixtotal").html())
+
+            var id_supprimer = $(this).closest('.btn').data('id')
+            $('#ing_supprimer').append(`<input type='hidden' value='${id_supprimer}' name='ing_suppr[]'>`)
+            $(this).closest('.btn').remove();
+            $("#prixtotal").html((ancienPrix - prix).toFixed(2))
+        })
 
         $(document).on('click', '#removeIngredient', function() {
 
