@@ -94,4 +94,9 @@ class PizzaModel extends Model
         }
         return $builder->countAllResults();
     }
+
+    public function getAllPizza(){
+        $builder = $this->builder();
+        return $builder->get()->getResultArray();
+    }
 }

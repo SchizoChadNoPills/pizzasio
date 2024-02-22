@@ -1,27 +1,10 @@
 # Menus
 accueil:
-   title: Accueil
-   url: /
-   perm: none
-   icon: <i class="nav-icon fas fa-icon-home"></i>
-   class: main-menu-accueil
-ingredient:
-  title: Ingrédients
-  url: /Ingredient
-  icon: <i class="nav-icon fa-solid fa-utensils"></i>
-  subs:
-    etape-ingredient:
-      title: Etape
-      url: /Step
-      icon: <i class="fa-solid fa-list-ol"></i>
-    categorie-ingredient:
-      title: Categorie
-      url: /Category
-      icon: <i class="nav-icon fa-solid fa-folder-tree"></i>
-    gerer-ingredient:
-      title: Ingrédients
-      url: /Ingredient
-      icon: <i class="nav-icon fa-solid fa-utensils"></i>
+  title: Accueil
+  url: /
+  perm: none
+  icon: <i class="nav-icon fas fa-icon-home"></i>
+  class: main-menu-accueil
 pizza:
   title: Pizza
   url: /Pizza
@@ -35,6 +18,45 @@ pizza:
       title: Gérer Pizza
       url: /Pizza
       icon: <i class="fa-solid fa-pizza-slice"></i>
+ingredient:
+  title: Ingrédients
+  url: /Ingredient
+  icon: <i class="nav-icon fa-solid fa-utensils"></i>
+  subs:
+    create-ingredient:
+      title: Créer Ingrédient
+      url: /Ingredient/edit/new
+      icon: <i class="fa-solid fa-circle-plus"></i>
+    gerer-ingredient:
+      title: Gérer Ingrédients
+      url: /Ingredient
+      icon: <i class="nav-icon fa-solid fa-utensils"></i>
+categorie:
+  title: Catégories
+  url: /Category
+  icon: <i class="nav-icon fa-solid fa-folder-tree"></i>
+  subs:
+    create-categorie:
+      title: Créer Catégorie
+      url: /Category/edit/new
+      icon: <i class="fa-solid fa-circle-plus"></i>
+    gerer-categorie:
+      title: Gérer Catégories
+      url: /Category
+      icon: <i class="nav-icon fa-solid fa-folder-tree"></i>
+etape:
+  title: Etapes
+  url: /Step
+  icon: <i class="fa-solid fa-list-ol"></i>
+  subs:
+    create-etape:
+      title: Créer Etape
+      url: /Step/edit/new
+      icon: <i class="fa-solid fa-circle-plus"></i>
+    gerer-etape:
+      title: Gérer Etapes
+      url: /Step
+      icon: <i class="fa-solid fa-list-ol"></i>
 admin:
   title: Administration
   url: /Admin
@@ -44,3 +66,7 @@ admin:
       title: Utilisateurs
       url: /Users
       icon: <i class="nav-icon fas fa-users-gear"></i>
+    api:
+      title: API
+      url: /ApiHelp
+      icon: <i class="fa-solid fa-link"></i>

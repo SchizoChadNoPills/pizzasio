@@ -47,4 +47,14 @@ class ComposePizzaModel extends Model{
         return $data;
     }
 
+    public function deleteIngredientPizza($data){
+        $builder = $this->db->table($this->table);
+        foreach ($data['ing_suppr'] as $delId) {
+            $builder
+                ->where('id_pizza', $data['id'])
+                ->where('id_ingredient', $delId)
+                ->limit(1)
+                ->delete();
+        }
+    }
 }

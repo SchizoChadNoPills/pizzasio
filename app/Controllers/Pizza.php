@@ -63,6 +63,8 @@ class Pizza extends BaseController
         foreach ($data['ingredients'] as $ing) {
             $data_ing[] = ['id_pizza' => $id, 'id_ing' => (int) $ing];
         }
+        $data_ing[] = ['id_pizza' => $id, 'id_ing' => (int) $data['base']];
+        $data_ing[] = ['id_pizza' => $id, 'id_ing' => (int) $data['pate']];
         $composePizza = model('ComposePizzaModel');
         $composePizza->insertPizzaIngredient($data_ing);
         return $this->redirect('Pizza');
@@ -106,10 +108,10 @@ class Pizza extends BaseController
         return $this->response->setJSON($result);
     }
 
-    public function getPizzaContent()
+    public function getAjaxPizzaContent()
     {
         $idPizza = $this->request->getVar('idPizza');
-        $pizzaModel = model('PizazModel');
+        $pizzaModel = model('PizzaModel');
         $ingredientModel = model('ingredientModel');
         $pizza = $pizzaModel->getPizzaById($idPizza);
 
@@ -118,15 +120,15 @@ class Pizza extends BaseController
             $pizza_ing = $composePizzaModel->getIngredientByPizzaId($pizza['id']);
             $id_base = $ingredientModel->getIngredientById($pizza['id_base']);
             $id_pate = $ingredientModel->getIngredientById($pizza['id_pate']);
-            $id_ing = $ingredientModel->getIngredientById($pizza['id_ing']);
+            $id_ing = $ingredientModel->getIngredientById($pizza['id']);
         }
 
         $result = array();
         $result = [
-            'pizza'           => $pizza_ing,
+            'pizza'           => $pizza,
             'base'    => $id_base,
             'pate' => $id_pate,
-            'ingredients' => $id_ing,
+            'ingredients' => $pizza_ing,
         ];
         return $this->response->setJson($result);
     }
