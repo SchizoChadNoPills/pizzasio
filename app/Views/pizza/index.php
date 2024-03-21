@@ -5,20 +5,20 @@
             <h2 class="card-title">Liste des pizzas</h2>
             <div class="card-toolbar">
 
-                <a href="/Pizza/edit/new" class="btn btn-primary">Nouvelle pizza</a>
+                <a href="<?= site_url('/Pizza/edit/new'); ?>" class="btn btn-primary">Nouvelle pizza</a>
             </div>
         </div>
         <div class="card-body">
             <table id="allPizzaTable" class="table table-hover ">
                 <thead>
-                    <tr class="text-start text-gray400 fw-blod fs-7 text-uppercase gs-0">
-                        <th>ID</th>
-                        <th>Nom</th>
-                        <th>Active</th>
-                        <th>Prix</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
+                <tr class="text-start text-gray400 fw-blod fs-7 text-uppercase gs-0">
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Active</th>
+                    <th>Prix</th>
+                    <th></th>
+                    <th></th>
+                </tr>
                 </thead>
                 <tbody>
 
@@ -55,7 +55,7 @@
     $(document).on('click', '.view', function(e){
         var id = $(this).data('id');
         $.ajax({
-            url: "/Pizza/AjaxPizzaContent",
+            url: "<?= site_url('/Pizza/AjaxPizzaContent'); ?>",
             type: "GET",
             data: {
                 idPizza: id
@@ -93,12 +93,12 @@
             "serverSide": true,
             "pageLength": 50,
             "ajax": {
-                "url": "/Pizza/SearchPizza",
+                "url": "<?= site_url('/Pizza/SearchPizza'); ?>",
                 "type": "POST"
             },
             "columns": [{
-                    "data": "id"
-                },
+                "data": "id"
+            },
                 {
                     "data": "name"
                 },
@@ -110,7 +110,7 @@
                 },
                 {
                     "data": 'price'
-                },  
+                },
                 {
                     "data": 'id',
                     "sortable": false,
@@ -122,7 +122,7 @@
                     "data": 'id',
                     "sortable": false,
                     "render": function(data, type, row) {
-                        return `<a href="/Pizza/edit/${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
+                        return `<a href="<?= site_url('/Pizza/edit/'); ?>${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
                     }
                 },
 

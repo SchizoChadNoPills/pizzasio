@@ -3,19 +3,19 @@
         <div class="card-header">
             <h2 class="card-title">Listes des catégories</h2>
             <div class="card-toolbar">
-                <a href="/Category/edit/new" class="btn btn-primary">Nouvelle catégorie</a>
+                <a href="<?= site_url('/Category/edit/new'); ?>" class="btn btn-primary">Nouvelle catégorie</a>
             </div>
         </div>
         <div class="card-body">
             <table class="table table-hover" id="allCategoryTable">
                 <thead>
-                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                        <th>ID</th>
-                        <th>Nom de catégorie</th>
-                        <th>Icon</th>
-                        <th>Etape</th>
-                        <th></th>
-                    </tr>
+                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                    <th>ID</th>
+                    <th>Nom de catégorie</th>
+                    <th>Icon</th>
+                    <th>Etape</th>
+                    <th></th>
+                </tr>
                 </thead>
                 <tbody>
                 </tbody>
@@ -45,7 +45,7 @@
 
             "ajax": {
 
-                "url": "/Category/SearchCategory",
+                "url": "<?= site_url('/Category/SearchCategory'); ?>",
 
                 "type": "POST"
 
@@ -85,7 +85,7 @@
 
                     "render": function(data, type, row) {
 
-                        return `<a href="/Category/edit/${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
+                        return `<a href="<?= site_url('/Category/edit/'); ?>${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
                     }
                 },
 
@@ -93,9 +93,9 @@
 
             "columnDefs": [{
 
-                    "searchable": false,
+                "searchable": false,
 
-                } // Désactiver la recherche pour les colonnes non pertinentes
+            } // Désactiver la recherche pour les colonnes non pertinentes
 
             ],
 

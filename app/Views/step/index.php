@@ -3,18 +3,18 @@
         <div class="card-header">
             <h2 class="card-title">Listes des étapes</h2>
             <div class="card-toolbar">
-                <a href="/Step/edit/new" class="btn btn-primary">Nouvelle étape</a>
+                <a href="<?= site_url('/Step/edit/new'); ?>" class="btn btn-primary">Nouvelle étape</a>
             </div>
         </div>
         <div class="card-body">
             <table class="table table-hover" id="allStepTable">
                 <thead>
-                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                        <th>ID</th>
-                        <th>Nom d'étape</th>
-                        <th>Ordre</th>
-                        <th></th>
-                    </tr>
+                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                    <th>ID</th>
+                    <th>Nom d'étape</th>
+                    <th>Ordre</th>
+                    <th></th>
+                </tr>
                 </thead>
                 <tbody>
                 </tbody>
@@ -23,7 +23,6 @@
     </div>
 </div>
 <script>
-
     $(document).ready(function() {
 
         var dataTable = $('#allStepTable').DataTable({
@@ -44,7 +43,7 @@
 
             "ajax": {
 
-                "url": "/Step/SearchStep",
+                "url": "<?= site_url('/Step/SearchStep'); ?>",
 
                 "type": "POST"
 
@@ -78,7 +77,7 @@
 
                     "render": function(data, type, row) {
 
-                        return `<a href="/Step/edit/${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
+                        return `<a href="<?= site_url('/Step/edit/'); ?>${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
                     }
                 },
 
@@ -86,9 +85,9 @@
 
             "columnDefs": [{
 
-                    "searchable": false,
+                "searchable": false,
 
-                } // Désactiver la recherche pour les colonnes non pertinentes
+            } // Désactiver la recherche pour les colonnes non pertinentes
 
             ],
 

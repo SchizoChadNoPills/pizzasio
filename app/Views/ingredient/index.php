@@ -3,22 +3,22 @@
         <div class="card-header">
             <h2 class="card-title">Listes des ingrédients</h2>
             <div class="card-toolbar">
-                <a href="/Ingredient/edit/new" class="btn btn-primary">Nouvel ingrédient</a>
+                <a href="<?= site_url('/Ingredient/edit/new'); ?>" class="btn btn-primary">Nouvel ingrédient</a>
             </div>
         </div>
         <div class="card-body">
             <table class="table table-hover" id="allIngredientTable">
                 <thead>
-                    <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                        <th>ID</th>
-                        <th>Nom d'ingrédient</th>
-                        <th>Stock</th>
-                        <th>Prix</th>
-                        <th>Bio</th>
-                        <th>Vegan</th>
-                        <th>Catégorie</th>
-                        <th></th>
-                    </tr>
+                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                    <th>ID</th>
+                    <th>Nom d'ingrédient</th>
+                    <th>Stock</th>
+                    <th>Prix</th>
+                    <th>Bio</th>
+                    <th>Vegan</th>
+                    <th>Catégorie</th>
+                    <th></th>
+                </tr>
                 </thead>
                 <tbody>
                 </tbody>
@@ -48,7 +48,7 @@
 
             "ajax": {
 
-                "url": "/Ingredient/SearchIngredient",
+                "url": "<?= site_url('/Ingredient/SearchIngredient'); ?>",
 
                 "type": "POST"
 
@@ -80,7 +80,7 @@
 
                 },
 
- 
+
 
                 {
 
@@ -117,7 +117,7 @@
 
                     "render": function(data, type, row) {
 
-                        return `<a href="/Ingredient/edit/${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
+                        return `<a href="<?= site_url('/Ingredient/edit/'); ?>${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
                     }
                 },
 
@@ -125,11 +125,11 @@
 
             "columnDefs": [{
 
-                    "searchable": false,
+                "searchable": false,
 
-                    "targets": [3, 4, 5]
+                "targets": [3, 4, 5]
 
-                } // Désactiver la recherche pour les colonnes non pertinentes
+            } // Désactiver la recherche pour les colonnes non pertinentes
 
             ],
 
