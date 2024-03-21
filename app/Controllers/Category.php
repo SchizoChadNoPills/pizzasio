@@ -8,7 +8,7 @@ class Category extends BaseController
 {
     public function getIndex()
     {
-        return $this->view('category\index');
+        return $this->view('/category/index');
     }
 
     public function getEdit($id_category){

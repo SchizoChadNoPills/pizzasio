@@ -9,7 +9,7 @@ class Pizza extends BaseController
 
     public function getIndex()
     {
-        return $this->view('pizza\index');
+        return $this->view('/pizza/index');
     }
 
     public function getEdit($id_pizza)
