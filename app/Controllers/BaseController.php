@@ -99,7 +99,7 @@ abstract class BaseController extends Controller
     /**
      * Constructor.
      */
-    public function initController(RequestInterface $request, Response $response,
+    public function initController(RequestInterface $request, ResponseInterface $response,
                                    LoggerInterface $logger)
     {
 // Do Not Edit This Line
