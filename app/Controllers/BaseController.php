@@ -21,7 +21,7 @@ use Psr\Log\LoggerInterface;
  */
 abstract class BaseController extends Controller
 {
-    /**
+     /**
      * Instance of the main Request object.
      *
      * @var CLIRequest|IncomingRequest
@@ -160,20 +160,20 @@ abstract class BaseController extends Controller
         $connected = isset($this->session->user);
 
         return view(
-                'templates/head',
-                [
-                    'show_menu'  => $connected,
-                    'mainmenu'   => $this->mainmenu,
-                    'breadcrumb' => $this->breadcrumb,
-                    'localmenu'  => $this->menu,
-                    'user'       => ($this->session->user ?? null),
-                    'menus'      => $this->menus(),
-                    'title'      => sprintf(
-                        '%s : %s',
-                        $this->title,
-                        $this->title_prefix
-                    )]
-            )
+            'templates/head',
+            [
+                'show_menu'  => $connected,
+                'mainmenu'   => $this->mainmenu,
+                'breadcrumb' => $this->breadcrumb,
+                'localmenu'  => $this->menu,
+                'user'       => ($this->session->user ?? null),
+                'menus'      => $this->menus(),
+                'title'      => sprintf(
+                    '%s : %s',
+                    $this->title,
+                    $this->title_prefix
+                )]
+        )
             . (($vue !== null) ? view($vue, $datas) : '')
             . view('templates/footer', ['messages' => $this->messages]);
     }
