@@ -21,7 +21,7 @@ use Psr\Log\LoggerInterface;
  */
 abstract class BaseController extends Controller
 {
-     /**
+    /**
      * Instance of the main Request object.
      *
      * @var CLIRequest|IncomingRequest
@@ -99,27 +99,29 @@ abstract class BaseController extends Controller
     /**
      * Constructor.
      */
-    public function initController(RequestInterface $request, ResponseInterface $response,
-                                   LoggerInterface $logger)
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
-// Do Not Edit This Line
+        // Do Not Edit This Line
         parent::initController($request, $response, $logger);
         $this->session = \Config\Services::session();
-        $this->router = service('router');
+        $this->router  = service('router');
         if (! $request->isCLI()) {
             if ($this->acl && ! ($this->router->methodName() === $this->acl_dmz)) {
                 /** @var User $user */
                 $user = session()->get('user');
                 if ($user === null) {
                     $this->redirect('/Login');
+
                     exit();
                 }
                 if (! $user->getActive()) {
                     $this->session = null;
                     $this->redirect('/Login');
+
                     exit();
                 }
             }
+
             if (session()->has('messages')) {
                 $this->messages = session()->get('messages');
                 session()->remove('messages');
@@ -136,11 +138,12 @@ abstract class BaseController extends Controller
     public function redirect()
     {
         $url = implode('/', func_get_args());
-        $URL = base_url($url); // Utiliser base_url pour inclure le sous-dossier
+        $url = base_url($url); // Utiliser base_url pour inclure le sous-dossier
         header("Location: {$url}");
         if (count($this->messages) > 0) {
             session()->set('messages', $this->messages);
         }
+
         exit; /** @phpstan-ignore-line */
     }
 
@@ -157,20 +160,20 @@ abstract class BaseController extends Controller
         $connected = isset($this->session->user);
 
         return view(
-            'templates/head',
-            [
-                'show_menu'  => $connected,
-                'mainmenu'   => $this->mainmenu,
-                'breadcrumb' => $this->breadcrumb,
-                'localmenu'  => $this->menu,
-                'user'       => ($this->session->user ?? null),
-                'menus'      => $this->menus(),
-                'title'      => sprintf(
-                    '%s : %s',
-                    $this->title,
-                    $this->title_prefix
-                )]
-        )
+                'templates/head',
+                [
+                    'show_menu'  => $connected,
+                    'mainmenu'   => $this->mainmenu,
+                    'breadcrumb' => $this->breadcrumb,
+                    'localmenu'  => $this->menu,
+                    'user'       => ($this->session->user ?? null),
+                    'menus'      => $this->menus(),
+                    'title'      => sprintf(
+                        '%s : %s',
+                        $this->title,
+                        $this->title_prefix
+                    )]
+            )
             . (($vue !== null) ? view($vue, $datas) : '')
             . view('templates/footer', ['messages' => $this->messages]);
     }
