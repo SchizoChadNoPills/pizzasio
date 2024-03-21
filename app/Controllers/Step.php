@@ -8,7 +8,7 @@ class Step extends BaseController
 {
     public function getIndex()
     {
-        return $this->view('step\index');
+        return $this->view('/step/index');
     }
 
     public function getEdit($id_step){
