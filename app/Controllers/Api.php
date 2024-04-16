@@ -24,10 +24,10 @@ class Api extends BaseController
             if ($pizza != null) {
                 return $this->json($pizza);
             } else {
-               return $this->json(["error" => "Pizza not found"], 500);
+                return $this->json(["error" => "Pizza not found"], 500);
             }
         } else {
-           return $this->json(["error" => "ID not found"], 500);
+            return $this->json(["error" => "ID not found"], 500);
         }
     }
 
@@ -72,11 +72,57 @@ class Api extends BaseController
                 }
             }
         }
-       return $this->json(["error" => "Mail or Password not found."],500);
+        return $this->json(["error" => "Mail or Password not found."], 500);
     }
 
     public function postRegister()
     {
-        
+
+    }
+
+    public function postCommandeToAPI()
+    {
+        // Récupérer le corps JSON de la requête
+        $requestData = $this->request->getJSON();
+        $userId = $requestData->userId;
+
+        // Insérer la commande dans la base de données
+        $commandeModel = model('CommandeModel');
+        $data = [
+            'id_client' => $userId
+        ];
+        $commandeId = $commandeModel->insert($data);
+
+        // Vérifier si l'insertion de la commande a réussi
+        if (!$commandeId) {
+            return $this->json(["error" => "Failed to save commande"], 500);
+        }
+
+        // Insérer les lignes de commande dans la base de données
+        $lignecommandeModel = model('LigneCommandeModel');
+        $pizzaArray = json_decode($requestData->pizza, true);
+        $ligneData = [];
+        foreach ($pizzaArray as $pizza) {
+            // Remplacer les virgules par des points dans le prix de la pizza
+            $price = str_replace(',', '.', $pizza['price']);
+            // Formater le prix de la pizza avec 2 décimales
+            $formattedPrice = number_format($price, 2);
+            $ligneData[] = [
+                'id_commande' => $commandeId,
+                'id_pizza' => $pizza['id'],
+                'price_commande' => $formattedPrice, // Utiliser le prix formaté
+                'size_pizza' => $pizza['size']
+            ];
+        }
+
+
+        // Insérer les données de la ligne de commande dans la base de données
+        $inserted = $lignecommandeModel->insertBatch($ligneData);
+
+        if ($inserted) {
+            return $this->json(["success" => "Commande enregistrée avec succès", "commande_id" => $commandeId]);
+        } else {
+            return $this->json(["error" => "Failed to save commande"], 500);
+        }
     }
 }
