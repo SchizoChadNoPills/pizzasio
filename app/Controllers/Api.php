@@ -31,6 +31,40 @@ class Api extends BaseController
         }
     }
 
+    public function getUser()
+    {
+        if ($this->request->getVar('id') != null) {
+            $userModel = model('UserModel');
+            $user = $userModel->getUserById((int)$this->request->getVar('id'));
+            if ($user != null) {
+                return $this->json($user);
+            } else {
+                return $this->json(["error" => "Pizza not found"], 500);
+            }
+        } else {
+            return $this->json(["error" => "ID not found"], 500);
+        }
+    }
+
+    public function getCommandeByUserId()
+    {
+        $idUrl = (int)$this->request->getVar('user_id');
+
+        if ($idUrl != null) {
+            $commandeModel = model('CommandeModel');
+            $commande = $commandeModel->getCommandeById($idUrl);
+            if ($commande != null) {
+                return $this->json($commande);
+            } else {
+                return $this->json(["error" => "Commande not found"], 500);
+            }
+        } else {
+            return $this->json(["error" => "ID not found"], 500);
+        }
+    }
+
+
+
     public function getLogin()
     {
         if (($email = $this->request->getVar('email')) !== null
@@ -89,7 +123,7 @@ class Api extends BaseController
         // Insérer la commande dans la base de données
         $commandeModel = model('CommandeModel');
         $data = [
-            'id_client' => $userId
+            'id_user' => $userId
         ];
         $commandeId = $commandeModel->insert($data);
 
