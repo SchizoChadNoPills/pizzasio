@@ -16,7 +16,10 @@ class CommandeModel extends Model
     public function getLigneCommandeByIdCommande($id)
     {
         $builder = $this->db->table('ligne_commande');
-        return $builder->where('id_commande', $id)->get()->getResult();
+        $builder->select('ligne_commande.*, pizza.name as pizza_name');
+        $builder->join('pizza', 'pizza.id = ligne_commande.id_pizza');
+        $query = $builder->where('id_commande', $id)->get();
+        return $query->getResult();
     }
 
 
