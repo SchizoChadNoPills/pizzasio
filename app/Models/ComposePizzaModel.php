@@ -47,6 +47,16 @@ class ComposePizzaModel extends Model{
         return $data;
     }
 
+    public function getIngredientNameByPizzaId($id_pizza) {
+        $builder = $this->db->table($this->table);
+        $builder->select('ingredient.name');
+        $builder->join('ingredient', 'ingredient.id = compose_pizza.id_ing');
+        $builder->where('compose_pizza.id_pizza', $id_pizza);
+        $query = $builder->get();
+        $data = $query->getResult();
+        return $data;
+    }
+
     public function deleteIngredientPizza($data){
         $builder = $this->db->table($this->table);
         foreach ($data['ing_suppr'] as $delId) {
