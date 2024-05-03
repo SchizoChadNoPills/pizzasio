@@ -112,6 +112,9 @@
                     "data": 'price'
                 },
                 {
+                    "data": 'img_url'
+                },
+                {
                     "data": 'id',
                     "sortable": false,
                     "render": function(data, type, row) {
