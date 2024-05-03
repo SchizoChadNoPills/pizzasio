@@ -94,7 +94,7 @@
     <script src="<?= site_url('/assets/js/custom/utilities/modals/users-search.js'); ?>"></script>
     <!--end::Custom Javascript-->
 
-    <script src="<?= site_url('/assets/js/pim.js'); ?>"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bs5-lightbox@1.8.3/dist/index.bundle.min.js"></script>
 
     <!--end::Javascript-->
 
