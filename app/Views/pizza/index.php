@@ -16,6 +16,7 @@
                     <th>Nom</th>
                     <th>Active</th>
                     <th>Prix</th>
+                    <th>Url Image</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -112,7 +113,10 @@
                     "data": 'price'
                 },
                 {
-                    "data": 'img_url'
+                    "data": 'img_url',
+                    "render": function(data, type, row) {
+                        return `<img style="width:50px; height:auto" class="img-thumbnail" src="${row.img_url}">`;
+                    }
                 },
                 {
                     "data": 'id',
