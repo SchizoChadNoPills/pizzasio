@@ -16,6 +16,23 @@ class Api extends BaseController
         return $this->json($allPizza);
     }
 
+    public function getIngredientByPizzaId()
+    {
+        if ($this->request->getVar('id_pizza') != null) {
+            $composePizzaModel = model('ComposePizzaModel');
+            $composePizza = $composePizzaModel->getIngredientNameByPizzaId((int)$this->request->getVar('id_pizza'));
+            if ($composePizza != null) {
+                return $this->json($composePizza);
+            } else {
+                return $this->json(["error" => "Pizza not found"], 500);
+            }
+        } else {
+            return $this->json(["error" => "ID not found"], 500);
+        }
+    }
+
+
+
     public function getPizza()
     {
         if ($this->request->getVar('id') != null) {

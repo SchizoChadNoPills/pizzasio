@@ -97,6 +97,21 @@ class PizzaModel extends Model
 
     public function getAllPizza(){
         $builder = $this->builder();
-        return $builder->get()->getResultArray();
+        $builder->distinct()
+            ->select('p.id, p.name, ip.name AS pate, ib.name AS base, p.active, p.price, p.img_url')
+            ->from('pizza AS p')
+            ->join('ingredient AS ip', 'p.id_pate = ip.id')
+            ->join('ingredient AS ib', 'p.id_base = ib.id');
+        $pizzas = $builder->get()->getResultArray();
+
+        // Charger le modèle ComposePizzaModel
+        $composePizzaModel = new ComposePizzaModel();
+
+        // Remplir le tableau d'ingrédients pour chaque pizza en utilisant la fonction de ComposePizzaModel
+        foreach ($pizzas as &$pizza) {
+            $pizza['ingredients'] = $composePizzaModel->getIngredientNameByPizzaId($pizza['id']);
+        }
+
+        return $pizzas;
     }
 }

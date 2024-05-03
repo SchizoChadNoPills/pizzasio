@@ -63,8 +63,6 @@ class Pizza extends BaseController
         foreach ($data['ingredients'] as $ing) {
             $data_ing[] = ['id_pizza' => $id, 'id_ing' => (int) $ing];
         }
-        $data_ing[] = ['id_pizza' => $id, 'id_ing' => (int) $data['base']];
-        $data_ing[] = ['id_pizza' => $id, 'id_ing' => (int) $data['pate']];
         $composePizza = model('ComposePizzaModel');
         $composePizza->insertPizzaIngredient($data_ing);
         return $this->redirect('Pizza');
