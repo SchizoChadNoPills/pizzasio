@@ -10,7 +10,7 @@ class PizzaModel extends Model
     protected $table = 'pizza';
     protected $primaryKey = 'id';
     protected $allowedFields = [
-        'id', 'name', 'id_pate', 'id_base', 'active',
+        'id', 'name', 'id_pate', 'id_base', 'active', 'img_url'
     ];
     protected $useTimestamps = false;
 
