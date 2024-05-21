@@ -79,7 +79,7 @@
                 <!--begin::Content-->
                 <div class="flex-row-fluid">
                     <!--begin::Form-->
-                    <form class="form w-lg-500px mx-auto" novalidate="novalidate" action="/Pizza/result" method="POST">
+                    <form class="form w-lg-500px mx-auto" novalidate="novalidate" action=<?= site_url("/Pizza/result")?> method="POST">
                         <!--begin::Group-->
                         <div class="mb-5">
                             <!--begin::Step Name-->
