@@ -14,15 +14,16 @@ class PizzaModel extends Model
     ];
     protected $useTimestamps = false;
 
-    public function createPizza($name, $base, $pate)
+    public function createPizza($name, $base, $pate, $img_url)
     {
         $builder = $this->db->table($this->table);
         $builder->set('name', $name);
         $builder->set('id_pate', $pate);
         $builder->set('id_base', $base);
+        $builder->set('img_url', $img_url);
 
 
-        $builder->set('active', 0);
+        $builder->set('active', 1);
 
         $builder->insert();
         return $this->db->insertID();
@@ -35,6 +36,7 @@ class PizzaModel extends Model
         if (isset($data['name'])) $builder->set('name', (string) $data['name']);
         if (isset($data['id_base'])) $builder->set('id_base', (int) $data['id_base']);
         if (isset($data['id_pate'])) $builder->set('id_pate', (int) $data['id_pate']);
+        if (isset($data['img_url'])) $builder->set('img_url', (int) $data['img_url']);
         if (isset($data['active'])) $builder->set('active', (bool) $data['active']);
 
         if (isset($data['id'])) {
@@ -94,6 +96,16 @@ class PizzaModel extends Model
         }
         return $builder->countAllResults();
     }
+
+    public function update_active_status($id, $active) {
+        $data = [
+            'active' => $active
+        ];
+
+        $this->db->where('id', $id);
+        $this->db->update('pizza', $data);
+    }
+
 
     public function getAllPizza(){
         $builder = $this->builder();

@@ -11,16 +11,18 @@
         <div class="card-body">
             <table id="allPizzaTable" class="table table-hover ">
                 <thead>
-                <tr class="text-start text-gray400 fw-blod fs-7 text-uppercase gs-0">
+                <tr class="text-start text-gray400 fw-bold fs-7 text-uppercase gs-0">
                     <th>ID</th>
                     <th>Nom</th>
                     <th>Active</th>
                     <th>Prix</th>
                     <th>Url Image</th>
+                    <th>Toggle Active</th>
                     <th></th>
                     <th></th>
                 </tr>
                 </thead>
+
                 <tbody>
 
                 </tbody>
@@ -97,26 +99,26 @@
                 "url": "<?= site_url('/Pizza/SearchPizza'); ?>",
                 "type": "POST"
             },
-            "columns": [{
-                "data": "id"
-            },
-                {
-                    "data": "name"
-                },
+            "columns": [
+                { "data": "id" },
+                { "data": "name" },
                 {
                     "data": "active",
                     "render": function(data) {
                         return (data === "1" ? 'Oui' : 'Non');
                     }
                 },
-                {
-                    "data": 'price'
-                },
+                { "data": 'price' },
                 {
                     "data": 'img_url',
                     "render": function(data, type, row) {
-                        // return `<img style="width:50px; height:auto" class="img-thumbnail" src="${row.img_url}">`;
                         return `<a href="${row.img_url}" data-toggle="lightbox"><img style="width:50px; height:auto" class="img-thumbnail" src="${row.img_url}"></a>`;
+                    }
+                },
+                { // New column for the checkbox
+                    "data": 'active',
+                    "render": function(data, type, row) {
+                        return `<input type="checkbox" class="toggle-active" data-id="${row.id}" ${data === "1" ? 'checked' : ''}>`;
                     }
                 },
                 {
@@ -132,17 +134,31 @@
                     "render": function(data, type, row) {
                         return `<a href="<?= site_url('/Pizza/edit/'); ?>${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
                     }
-                },
-
+                }
             ],
-
-
-            "order": [
-                [0, "asc"]
-
-            ]
-
+            "order": [[0, "asc"]]
         });
 
+        // Event listener for checkbox toggle
+        $(document).on('change', '.toggle-active', function() {
+            var id = $(this).data('id');
+            var active = $(this).is(':checked') ? '1' : '0';
+
+            $.ajax({
+                url: "<?= site_url('/Pizza/ToggleActive'); ?>",
+                type: "POST",
+                data: {
+                    id: id,
+                    active: active
+                },
+                success: function(response) {
+                    console.log(response);
+                    dataTable.ajax.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
     });
 </script>
