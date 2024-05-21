@@ -277,7 +277,7 @@
             console.log(id_category);
 
             $.ajax({
-                url: "/Pizza/AjaxIngredients",
+                url: "<?= site_url('/Pizza/AjaxIngredients'); ?>",
                 type: "GET",
                 data: {
                     idCateg: id_category
