@@ -273,14 +273,14 @@
 
         $("#btn-add").on('click', function(e) {
             e.preventDefault()
-            var id_categ = $('#categ').val();
-            console.log(id_categ);
+            var id_category = $('#categ').val();
+            console.log(id_category);
 
             $.ajax({
                 url: "/Pizza/AjaxIngredients",
                 type: "GET",
                 data: {
-                    idCateg: id_categ
+                    idCateg: id_category
                 },
                 success: function(data) {
                     let select = `<div class="d-flex flex-row "><select class="selectIngredient form-select mb-4 me-4" data-old-price="0.0"  name="ingredients[]">`
