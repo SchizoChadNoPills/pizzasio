@@ -22,7 +22,6 @@
                                     <span class="stepper-number">1</span>
                                 </div>
                                 <!--end::Icon-->
-
                                 <!--begin::Label-->
                                 <div class="stepper-label">
                                     <h3 class="stepper-title">
@@ -32,17 +31,14 @@
                                 <!--end::Label-->
                             </div>
                             <!--end::Wrapper-->
-
                             <!--begin::Line-->
                             <div class="stepper-line h-40px"></div>
                             <!--end::Line-->
                         </div>
                         <!--end::Step-Name-->
-                        <?php
-                        foreach ($steps as $s) :
-                        ?>
+                        <?php foreach ($steps as $s): ?>
                             <!--begin::Step-->
-                            <div class="stepper-item me-5 current" data-kt-stepper-element="nav">
+                            <div class="stepper-item me-5" data-kt-stepper-element="nav">
                                 <!--begin::Wrapper-->
                                 <div class="stepper-wrapper d-flex align-items-center">
                                     <!--begin::Icon-->
@@ -51,7 +47,6 @@
                                         <span class="stepper-number"><?= $s['order'] + 1; ?></span>
                                     </div>
                                     <!--end::Icon-->
-
                                     <!--begin::Label-->
                                     <div class="stepper-label">
                                         <h3 class="stepper-title">
@@ -61,25 +56,41 @@
                                     <!--end::Label-->
                                 </div>
                                 <!--end::Wrapper-->
-
                                 <!--begin::Line-->
                                 <div class="stepper-line h-40px"></div>
                                 <!--end::Line-->
                             </div>
                             <!--end::Step-->
-                        <?php
-                        endforeach;
-                        ?>
-
+                        <?php endforeach; ?>
+                        <div class="stepper-item me-5" data-kt-stepper-element="nav">
+                            <!--begin::Wrapper-->
+                            <div class="stepper-wrapper d-flex align-items-center">
+                                <!--begin::Icon-->
+                                <div class="stepper-icon w-40px h-40px">
+                                    <i class="stepper-check fas fa-check"></i>
+                                    <span class="stepper-number">5</span>
+                                </div>
+                                <!--end::Icon-->
+                                <!--begin::Label-->
+                                <div class="stepper-label">
+                                    <h3 class="stepper-title">
+                                        Url Image
+                                    </h3>
+                                </div>
+                                <!--end::Label-->
+                            </div>
+                            <!--end::Wrapper-->
+                            <!--begin::Line-->
+                            <div class="stepper-line h-40px"></div>
+                            <!--end::Line-->
+                        </div>
                     </div>
-
                     <!--end::Nav-->
                 </div>
-
                 <!--begin::Content-->
                 <div class="flex-row-fluid">
                     <!--begin::Form-->
-                    <form class="form w-lg-500px mx-auto" novalidate="novalidate" action=<?= site_url("/Pizza/result")?> method="POST">
+                    <form class="form w-lg-500px mx-auto" novalidate="novalidate" action="<?= site_url("/Pizza/result")?>" method="POST">
                         <!--begin::Group-->
                         <div class="mb-5">
                             <!--begin::Step Name-->
@@ -89,15 +100,13 @@
                                     <!--begin::Label-->
                                     <label class="form-label">Nom de la pizza</label>
                                     <!--end::Label-->
-
                                     <!--begin::Input-->
                                     <input type="text" class="form-control form-control-solid" name="name" placeholder="" value="<?= isset($pizza) ? $pizza['name'] : '' ?>" />
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Input group-->
                             </div>
-                            <!--begin::Step Name-->
-
+                            <!--end::Step Name-->
                             <!--begin::Step Pate-->
                             <div class="flex-column" data-kt-stepper-element="content">
                                 <!--begin::Input group-->
@@ -105,7 +114,6 @@
                                     <!--begin::Label-->
                                     <label class="form-label">Pâte de la pizza</label>
                                     <!--end::Label-->
-
                                     <!--begin::Input-->
                                     <select class="form-select form-select-solid selectIngredient" name="pate" data-old-price="0">
                                         <?php foreach ($pate as $pate) : ?>
@@ -116,8 +124,7 @@
                                 </div>
                                 <!--end::Input group-->
                             </div>
-                            <!--begin::Step Pate-->
-
+                            <!--end::Step Pate-->
                             <!--begin::Step Base-->
                             <div class="flex-column" data-kt-stepper-element="content">
                                 <!--begin::Input group-->
@@ -125,7 +132,6 @@
                                     <!--begin::Label-->
                                     <label class="form-label">Base de la pizza</label>
                                     <!--end::Label-->
-
                                     <!--begin::Input-->
                                     <select class="form-select form-select-solid selectIngredient" name="base" data-old-price="0">
                                         <?php foreach ($base as $base) : ?>
@@ -136,62 +142,56 @@
                                 </div>
                                 <!--end::Input group-->
                             </div>
-                            <!--begin::Step Base-->
-
+                            <!--end::Step Base-->
                             <!--begin::Step Ingredient-->
                             <div class="flex-column" data-kt-stepper-element="content">
                                 <!--begin::Input group-->
                                 <div class="fv-row mb-10">
                                     <!--begin::Label-->
                                     <label class="form-label">Ingredients de la pizza</label>
-                                    <?php if (isset($pizza)) {
-
-                                        echo '<p class="fs-6">Ingrédient de la pizza</p>';
-                                        foreach ($pizza_ing as $p_ing) {
-                                    ?>
-
-
-                                            <div class="btn btn-sm btn-outline me-4  position-relative" data-id="<?= $p_ing->id ?>" data-price="<?= $p_ing->price ?>">
-                                                <?php
-                                                echo $p_ing->name;
-                                                ?>
-                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger removeOldIngredient"">
+                                    <?php if (isset($pizza)) : ?>
+                                        <p class="fs-6">Ingrédient de la pizza</p>
+                                        <?php foreach ($pizza_ing as $p_ing) : ?>
+                                            <div class="btn btn-sm btn-outline me-4 position-relative" data-id="<?= $p_ing->id ?>" data-price="<?= $p_ing->price ?>">
+                                                <?= $p_ing->name; ?>
+                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger removeOldIngredient">
                                                     X
                                                 </span>
                                             </div>
-
-                                    <?php }
-                                    } ?>
-
-                                                    <!--end::Label-->
-
-                                                    <!--begin::Input-->
-                                                    <div class=" d-flex flex-row">
-                                                    <select class="form-select mb-4 me-4" id="categ">
-                                                        <?php foreach ($categories as $cat) {
-                                                            if ($cat['id'] == 10 || $cat['id'] == 13) {
-                                                                continue;
-                                                            } ?>
-                                                            <option value="<?= $cat['id']; ?>"><?= $cat['name']; ?></option>
-
-                                                        <?php    } ?>
-                                                    </select>
-                                                    <a href="#" class="btn btn-success mb-4" id="btn-add">Ajouter</a>
-                                            </div>
-                                            <div id="emplacement">
-                                                <!--end::Input-->
-                                            </div>
-                                            <div id=" ing_supprimer">
-                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                    <!--begin::Input-->
+                                    <div class="d-flex flex-row">
+                                        <select class="form-select mb-4 me-4" id="categ">
+                                            <?php foreach ($categories as $cat) : ?>
+                                                <?php if ($cat['id'] == 10 || $cat['id'] == 13) continue; ?>
+                                                <option value="<?= $cat['id']; ?>"><?= $cat['name']; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                        <a href="#" class="btn btn-success mb-4" id="btn-add">Ajouter</a>
+                                    </div>
+                                    <div id="emplacement"></div>
+                                    <div id="ing_supprimer"></div>
                                 </div>
                                 <!--end::Input group-->
                             </div>
-                            <!--begin::Step Ingredient-->
-
-
+                            <!--end::Step Ingredient-->
+                            <!--begin::Step Image URL-->
+                            <div class="flex-column" data-kt-stepper-element="content">
+                                <!--begin::Input group-->
+                                <div class="fv-row mb-10">
+                                    <!--begin::Label-->
+                                    <label class="form-label">Url de l'image</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="text" class="form-control form-control-solid" name="img_url" placeholder="" value="<?= isset($pizza) ? $pizza['img_url'] : '' ?>" />
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                            </div>
+                            <!--end::Step Image URL-->
                         </div>
                         <!--end::Group-->
-
                         <!--begin::Actions-->
                         <div class="d-flex flex-stack">
                             <!--begin::Wrapper-->
@@ -202,7 +202,7 @@
                             </div>
                             <!--end::Wrapper-->
                             <div>
-                                <p class="fs-6">Prix de la pizza:<span id="prixtotal">7</span>€</p>
+                                <p class="fs-6">Prix de la pizza: <span id="prixtotal">7</span>€</p>
                             </div>
                             <!--begin::Wrapper-->
                             <div>
@@ -214,7 +214,6 @@
                                         Patientez... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                     </span>
                                 </button>
-
                                 <button type="button" class="btn btn-primary" data-kt-stepper-action="next">
                                     Suivant
                                 </button>
@@ -228,9 +227,7 @@
             </div>
             <!--end::Stepper-->
         </div>
-        <div class="card-footer">
-
-        </div>
+        <div class="card-footer"></div>
     </div>
 </div>
 <script>
@@ -306,6 +303,80 @@
             $("#prixtotal").html((price + selectedPrice - oldPrice).toFixed(2));
             $(this).data('old-price', selectedPrice);
         });
-
     })
+    $(document).ready(function() {
+        var dataTable = $('#allPizzaTable').DataTable({
+            "language": {
+                "url": '//cdn.datatables.net/plug-ins/1.13.4/i18n/fr-FR.json',
+            },
+            "responsive": true,
+            "processing": true,
+            "serverSide": true,
+            "pageLength": 50,
+            "ajax": {
+                "url": "<?= site_url('/Pizza/SearchPizza'); ?>",
+                "type": "POST"
+            },
+            "columns": [
+                { "data": "id" },
+                { "data": "name" },
+                {
+                    "data": "active",
+                    "render": function(data) {
+                        return (data === "1" ? 'Oui' : 'Non');
+                    }
+                },
+                { "data": 'price' },
+                {
+                    "data": 'img_url',
+                    "render": function(data, type, row) {
+                        return `<a href="${row.img_url}" data-toggle="lightbox"><img style="width:50px; height:auto" class="img-thumbnail" src="${row.img_url}"></a>`;
+                    }
+                },
+                { // New column for the checkbox
+                    "data": 'active',
+                    "render": function(data, type, row) {
+                        return `<input type="checkbox" class="toggle-active" data-id="${row.id}" ${data === "1" ? 'checked' : ''}>`;
+                    }
+                },
+                {
+                    "data": 'id',
+                    "sortable": false,
+                    "render": function(data, type, row) {
+                        return `<i class="fa-solid fa-eye me-4 view" data-id="${row.id}"></i>`;
+                    }
+                },
+                {
+                    "data": 'id',
+                    "sortable": false,
+                    "render": function(data, type, row) {
+                        return `<a href="<?= site_url('/Pizza/edit/'); ?>${row.id}"><i class="fa-solid fa-pencil me-4"></i>Éditer</a>`;
+                    }
+                }
+            ],
+            "order": [[0, "asc"]]
+        });
+
+        // Event listener for checkbox toggle
+        $(document).on('change', '.toggle-active', function() {
+            var id = $(this).data('id');
+            var active = $(this).is(':checked') ? '1' : '0';
+
+            $.ajax({
+                url: "<?= site_url('/Pizza/ToggleActive'); ?>",
+                type: "POST",
+                data: {
+                    id: id,
+                    active: active
+                },
+                success: function(response) {
+                    console.log(response);
+                    dataTable.ajax.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
 </script>
