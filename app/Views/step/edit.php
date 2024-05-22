@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="submit" value="<?= isset($step) ? "update" : "insert"; ?>" name="type" class="btn btn-primary">Valider</btn>
+                <button type="submit" value="<?= isset($step) ? "update" : "insert"; ?>" name="type" class="btn btn-primary">Valider</button>
             </div>
         </div>
     </div>

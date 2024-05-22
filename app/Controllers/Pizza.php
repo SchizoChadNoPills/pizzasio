@@ -138,7 +138,7 @@ class Pizza extends BaseController
         $active = $this->input->post('active');
 
         // Update the active status in the database
-        $activePizza = model('ActivePizzaModel');
+        $activePizza = model('PizzaModel');
         $activePizza->update_active_status($id, $active);
 
         echo json_encode(['status' => 'success']);
