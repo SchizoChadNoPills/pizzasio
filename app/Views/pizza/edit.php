@@ -90,7 +90,8 @@
                 <!--begin::Content-->
                 <div class="flex-row-fluid">
                     <!--begin::Form-->
-                    <form class="form w-lg-500px mx-auto" novalidate="novalidate" action="<?= site_url("/Pizza/result")?>" method="POST">
+                    <form class="form w-lg-500px mx-auto" novalidate="novalidate" action="<?= isset($pizza) ? site_url("/Pizza/edit") : site_url("/Pizza/result") ?>" method="POST">
+                        <input type="hidden" name="id" value="<?= isset($pizza['id']) ? $pizza['id'] : '' ?>">
                         <!--begin::Group-->
                         <div class="mb-5">
                             <!--begin::Step Name-->
@@ -157,6 +158,7 @@
                                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger removeOldIngredient">
                                                     X
                                                 </span>
+                                                <input type="hidden" name="ingredients[]" value="<?= $p_ing->id ?>">
                                             </div>
                                         <?php endforeach; ?>
                                     <?php endif; ?>

@@ -68,6 +68,33 @@ class Pizza extends BaseController
         return $this->redirect('Pizza');
     }
 
+    public function postEdit()
+    {
+        $data = $this->request->getPost();
+        $pizzaModel = model('PizzaModel');
+
+        $pizzaId = $data['id'];
+
+        $pizzaModel->updatePizza($pizzaId, [
+            'name' => $data['name'],
+            'id_base' => $data['base'],
+            'id_pate' => $data['pate'],
+            'img_url' => $data['img_url']
+        ]);
+
+        $data_ing = array();
+        foreach ($data['ingredients'] as $ing) {
+            $data_ing[] = ['id_pizza' => $pizzaId, 'id_ing' => (int) $ing];
+        }
+
+        $composePizza = model('ComposePizzaModel');
+        $composePizza->deletePizzaIngredients($pizzaId);
+        $composePizza->insertPizzaIngredient($data_ing);
+
+        return $this->redirect('Pizza');
+    }
+
+
     public function postSearchPizza()
     {
         $pizzaModel = model('PizzaModel');
