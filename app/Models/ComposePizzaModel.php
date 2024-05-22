@@ -21,22 +21,6 @@ class ComposePizzaModel extends Model{
 
     }
 
-    public function updatePizza($data)
-    {
-        $builder = $this->db->table($this->table);
-
-        if (isset($data['name'])) $builder->set('name', (string) $data['name']);
-        if (isset($data['id_base'])) $builder->set('id_base', (int) $data['id_base']);
-        if (isset($data['id_pate'])) $builder->set('id_pate', (int) $data['id_pate']);
-        if (isset($data['active'])) $builder->set('active', (boolean) $data['active']);
-
-        if (isset($data['id'])) {
-            $builder->where('id', $data['id']);
-            $builder->update();
-        }
-    }
-
-
     public function getIngredientByPizzaId($id_pizza) {
         $builder = $this->db->table($this->table);
         $builder->select('ingredient.name, ingredient.id, ingredient.price');
@@ -67,4 +51,10 @@ class ComposePizzaModel extends Model{
                 ->delete();
         }
     }
+
+    public function deletePizzaIngredients($pizzaId)
+    {
+        return $this->where('id_pizza', $pizzaId)->delete();
+    }
+
 }

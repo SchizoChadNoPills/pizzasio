@@ -29,21 +29,11 @@ class PizzaModel extends Model
         return $this->db->insertID();
     }
 
-    public function updatePizza($data)
+    public function updatePizza($id, $data)
     {
-        $builder = $this->db->table($this->table);
-
-        if (isset($data['name'])) $builder->set('name', (string) $data['name']);
-        if (isset($data['id_base'])) $builder->set('id_base', (int) $data['id_base']);
-        if (isset($data['id_pate'])) $builder->set('id_pate', (int) $data['id_pate']);
-        if (isset($data['img_url'])) $builder->set('img_url', (int) $data['img_url']);
-        if (isset($data['active'])) $builder->set('active', (bool) $data['active']);
-
-        if (isset($data['id'])) {
-            $builder->where('id', $data['id']);
-            $builder->update();
-        }
+        return $this->update($id, $data);
     }
+
 
     public function getLastIdPizza()
     {
