@@ -14,7 +14,6 @@
                 <tr class="text-start text-gray400 fw-bold fs-7 text-uppercase gs-0">
                     <th>ID</th>
                     <th>Nom</th>
-                    <th>Active</th>
                     <th>Prix</th>
                     <th>Url Image</th>
                     <th>Toggle Active</th>
@@ -66,6 +65,7 @@
             success: function(data) {
                 console.log(data);
                 var modal = new bootstrap.Modal(document.getElementById('modalPizza'));
+                modal.toggle();
                 $(".modal-title").html(data.pizza.name);
                 var content = "<h5>Pâte</h5>";
                 content += "<ul><li>"+ data.pate.name +"</li></ul>";
@@ -78,7 +78,6 @@
                 });
                 content += "</ul>";
                 $(".modal-body").html(content);
-                modal.toggle();
             },
             error: function(hxr, status, error) {
                 console.log(error);
@@ -102,12 +101,7 @@
             "columns": [
                 { "data": "id" },
                 { "data": "name" },
-                {
-                    "data": "active",
-                    "render": function(data) {
-                        return (data === "1" ? 'Oui' : 'Non');
-                    }
-                },
+
                 { "data": 'price' },
                 {
                     "data": 'img_url',
