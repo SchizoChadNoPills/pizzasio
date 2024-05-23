@@ -16,7 +16,7 @@
                     <th>Nom</th>
                     <th>Prix</th>
                     <th>Url Image</th>
-                    <th>Toggle Active</th>
+                    <th>Active</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -53,42 +53,10 @@
     </div>
 </div>
 <script>
-
-    $(document).on('click', '.view', function(e){
-        var id = $(this).data('id');
-        $.ajax({
-            url: "<?= site_url('/Pizza/AjaxPizzaContent'); ?>",
-            type: "GET",
-            data: {
-                idPizza: id
-            },
-            success: function(data) {
-                console.log(data);
-                var modal = new bootstrap.Modal(document.getElementById('modalPizza'));
-                modal.toggle();
-                $(".modal-title").html(data.pizza.name);
-                var content = "<h5>Pâte</h5>";
-                content += "<ul><li>"+ data.pate.name +"</li></ul>";
-                content += "<h5>Base</h5>"
-                content += "<ul><li>"+ data.base.name +"</li></ul>";
-                content += "<h5>Ingrédients</h5>";
-                content += "<ul>";
-                data.ingredients.forEach((ing) => {
-                    content += "<li>" + ing.name + "</li>";
-                });
-                content += "</ul>";
-                $(".modal-body").html(content);
-            },
-            error: function(hxr, status, error) {
-                console.log(error);
-            }
-        })
-    })
-
     $(document).ready(function() {
         var dataTable = $('#allPizzaTable').DataTable({
             "language": {
-                "url": '//cdn.datatables.net/plug-ins/1.13.4/i18n/fr-FR.json',
+                "url": '//cdn.datatables.net/plug-ins/1.13.4/i18n/fr-FR.json'
             },
             "responsive": true,
             "processing": true,
@@ -96,30 +64,32 @@
             "pageLength": 50,
             "ajax": {
                 "url": "<?= site_url('/Pizza/SearchPizza'); ?>",
-                "type": "POST"
+                "type": "POST",
+                "data": function(d) {
+                    d.csrf_token_name = '<?= csrf_hash(); ?>';
+                }
             },
             "columns": [
                 { "data": "id" },
                 { "data": "name" },
-
-                { "data": 'price' },
+                { "data": "price" },
                 {
                     "data": 'img_url',
                     "render": function(data, type, row) {
                         return `<a href="${row.img_url}" data-toggle="lightbox"><img style="width:50px; height:auto" class="img-thumbnail" src="${row.img_url}"></a>`;
                     }
                 },
-                { // New column for the checkbox
+                {
                     "data": 'active',
                     "render": function(data, type, row) {
-                        return `<input type="checkbox" class="toggle-active" data-id="${row.id}" ${data === "1" ? 'checked' : ''}>`;
+                        return `<input type="checkbox" class="toggle-active" data-id="${row.id}" ${data == "1" ? 'checked' : ''}>`;
                     }
                 },
                 {
                     "data": 'id',
                     "sortable": false,
                     "render": function(data, type, row) {
-                        return `<i class="fa-solid fa-eye me-4 view" data-id="${row.id}"></i>`;
+                        return `<i class="fa-solid fa-eye me-4 view" data-id="${row.id}" data-bs-toggle="modal" data-bs-target="#modalPizza"></i>`;
                     }
                 },
                 {
@@ -133,7 +103,35 @@
             "order": [[0, "asc"]]
         });
 
-        // Event listener for checkbox toggle
+        $(document).on('click', '.view', function(e){
+            var id = $(this).data('id');
+            $.ajax({
+                url: "<?= site_url('/Pizza/AjaxPizzaContent'); ?>",
+                type: "GET",
+                data: {
+                    idPizza: id
+                },
+                success: function(data) {
+                    console.log(data);
+                    $(".modal-title").html(data.pizza.name);
+                    var content = "<h5>Pâte</h5>";
+                    content += "<ul><li>"+ data.pate.name +"</li></ul>";
+                    content += "<h5>Base</h5>"
+                    content += "<ul><li>"+ data.base.name +"</li></ul>";
+                    content += "<h5>Ingrédients</h5>";
+                    content += "<ul>";
+                    data.ingredients.forEach((ing) => {
+                        content += "<li>" + ing.name + "</li>";
+                    });
+                    content += "</ul>";
+                    $(".modal-body").html(content);
+                },
+                error: function(hxr, status, error) {
+                    console.log(error);
+                }
+            });
+        });
+
         $(document).on('change', '.toggle-active', function() {
             var id = $(this).data('id');
             var active = $(this).is(':checked') ? '1' : '0';
@@ -143,16 +141,24 @@
                 type: "POST",
                 data: {
                     id: id,
-                    active: active
+                    active: active,
+                    csrf_token_name: '<?= csrf_hash(); ?>'
                 },
                 success: function(response) {
                     console.log(response);
-                    dataTable.ajax.reload();
+                    if (response.status === 'success') {
+                        dataTable.ajax.reload();
+                    } else {
+                        alert('Erreur lors de la mise à jour du statut.');
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
+                    alert('Erreur lors de la mise à jour du statut.');
                 }
             });
         });
     });
 </script>
+
+

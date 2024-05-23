@@ -134,15 +134,16 @@ class Pizza extends BaseController
     }
 
     public function postToggleActive() {
-        $id = $this->input->post('id');
-        $active = $this->input->post('active');
+        $id = $this->request->getPost('id');
+        $active = $this->request->getPost('active');
 
         // Update the active status in the database
-        $activePizza = model('PizzaModel');
-        $activePizza->update_active_status($id, $active);
+        $pizzaModel = model('PizzaModel');
+        $pizzaModel->update_active_status($id, $active);
 
-        echo json_encode(['status' => 'success']);
+        return $this->response->setJSON(['status' => 'success']);
     }
+
 
 
     public function getAjaxPizzaContent()
