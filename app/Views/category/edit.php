@@ -13,11 +13,11 @@
             </div>
             <div class="card-body">
                 <?php
-                if (isset($category)) { 
+                if (isset($category)) {
                     $isAdmin = true;
                     ?>
                     <input type="hidden" name="id" value="<?= $category['id']; ?>">
-                <?php
+                    <?php
                 }
                 ?>
                 <div class="row mb-3">
@@ -26,21 +26,15 @@
                         <input id="name" type="text" name="name" class="form-control" value="<?= isset($category) ? $category['name'] : ''; ?>">
                     </div>
                 </div>
-                <div class="row mb-3">
-                    <label for="icon" class="col-sm-2 col-form-label">Icone</label>
-                    <div class="col-sm-10">
-                        <input id="icon" type="text" name="icon" class="form-control" value="<?= isset($category) ? $category['icon'] : ''; ?>">
-                    </div>
-                </div>
                 <div class="mb-3 row">
                     <label for="category" class="col-sm-2 col-form-label">Etape</label>
                     <div class="col-sm-10">
                         <select class="form-select" name="id_step">
                             <?php
                             foreach ($step as $s) {
-                            ?>
+                                ?>
                                 <option value="<?= $s['order']; ?>" <?= (isset($category) && $category['id_step'] == $s['order']) ? 'selected' : ''; ?>><?= $s['name']; ?></option>
-                            <?php
+                                <?php
                             }
                             ?>
                         </select>
@@ -48,7 +42,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="submit" value="<?= isset($category) ? "update" : "insert"; ?>" name="type" class="btn btn-primary">Valider</btn>
+                <button type="submit" value="<?= isset($category) ? "update" : "insert"; ?>" name="type" class="btn btn-primary">Valider</button>
             </div>
         </div>
     </div>

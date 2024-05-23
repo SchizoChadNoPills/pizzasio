@@ -12,7 +12,6 @@
                 <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                     <th>ID</th>
                     <th>Nom de catégorie</th>
-                    <th>Icon</th>
                     <th>Etape</th>
                     <th></th>
                 </tr>
@@ -62,12 +61,6 @@
                 {
 
                     "data": "name"
-
-                },
-
-                {
-
-                    "data": "icon"
 
                 },
 
