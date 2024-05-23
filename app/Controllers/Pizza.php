@@ -150,24 +150,33 @@ class Pizza extends BaseController
     {
         $idPizza = $this->request->getVar('idPizza');
         $pizzaModel = model('PizzaModel');
-        $ingredientModel = model('ingredientModel');
+        $ingredientModel = model('IngredientModel');
         $pizza = $pizzaModel->getPizzaById($idPizza);
 
         if ($pizza) {
             $composePizzaModel = model('ComposePizzaModel');
             $pizza_ing = $composePizzaModel->getIngredientByPizzaId($pizza['id']);
-            $id_base = $ingredientModel->getIngredientById($pizza['id_base']);
-            $id_pate = $ingredientModel->getIngredientById($pizza['id_pate']);
-            $id_ing = $ingredientModel->getIngredientById($pizza['id']);
-        }
+            $id_base = null;
+            $id_pate = null;
 
-        $result = array();
-        $result = [
-            'pizza'           => $pizza,
-            'base'    => $id_base,
-            'pate' => $id_pate,
-            'ingredients' => $pizza_ing,
-        ];
-        return $this->response->setJson($result);
+            // Vérifier si l'id_base existe dans la pizza avant d'accéder à la méthode
+            if (isset($pizza['id_base'])) {
+                $id_base = $ingredientModel->getIngredientById($pizza['id_base']);
+            }
+
+            // Vérifier si l'id_pate existe dans la pizza avant d'accéder à la méthode
+            if (isset($pizza['id_pate'])) {
+                $id_pate = $ingredientModel->getIngredientById($pizza['id_pate']);
+            }
+
+            $result = array();
+            $result = [
+                'pizza' => $pizza,
+                'base' => $id_base,
+                'pate' => $id_pate,
+                'ingredients' => $pizza_ing,
+            ];
+            return $this->response->setJson($result);
+        }
     }
 }
