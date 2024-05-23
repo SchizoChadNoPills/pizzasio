@@ -88,13 +88,10 @@ class PizzaModel extends Model
     }
 
     public function update_active_status($id, $active) {
-        $data = [
-            'active' => $active
-        ];
-
-        $this->db->where('id', $id);
-        $this->db->update('pizza', $data);
+        $data = ['active' => $active];
+        $this->update($id, $data);
     }
+
 
 
     public function getAllPizza(){
