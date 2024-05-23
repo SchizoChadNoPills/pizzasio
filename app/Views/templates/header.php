@@ -150,7 +150,7 @@
                    <!--end::Menu item-->
                    <!--begin::Menu item-->
                    <div class="menu-item px-5">
-                     <a href="/Login/out" class="menu-link px-5">Déconnexion</a>
+                     <a href="<?= site_url('/Login/out'); ?>" class="menu-link px-5">Déconnexion</a>
                    </div>
                    <!--end::Menu item-->
                  </div>
