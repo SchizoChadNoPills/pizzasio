@@ -16,6 +16,13 @@ class Api extends BaseController
         return $this->json($allPizza);
     }
 
+    public function getAllPromo()
+    {
+        $promoModel = model('PromoModel');
+        $allPromo = $promoModel->getAllPromo();
+        return $this->json($allPromo);
+    }
+
     public function getIngredientByPizzaId()
     {
         if ($this->request->getVar('id_pizza') != null) {
