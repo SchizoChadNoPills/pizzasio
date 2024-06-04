@@ -15,10 +15,14 @@ class PromoModel extends Model
     ];
     protected $useTimestamps = false;
 
-    public function getAllPromo(){
+    public function getAllPromo()
+    {
         $builder = $this->builder();
         $builder->distinct()
             ->select('p.description, p.effect, p.active, p.date, p.duree')
             ->from('promo AS p');
-        $promo = $builder->get()->getResultArray();
-}}
+        $promos = $builder->get()->getResultArray();
+
+        return $promos;
+    }
+}
